@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public static GameManager instance;
 
+    /// <summary>
+    /// List of Players
+    /// </summary>
+    public List<PlayerController> players;
+
     
     // Prefabs
     public GameObject playerControllerPrefab;
@@ -18,7 +23,7 @@ public class GameManager : MonoBehaviour
     #endregion Variables
 
     private void Awake()
-    {
+    { 
         if (instance == null)
         {
             instance = this;
@@ -28,6 +33,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // Allocate Memory for player list
+        players = new List<PlayerController>();
     }
 
     private void Start()
@@ -39,11 +47,9 @@ public class GameManager : MonoBehaviour
     {
         // Spawn the Player Controller at (0, 0, 0) with no rotation
         GameObject newPlayerObj = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity);
-        newPlayerObj.name = "Player 1"
 
         // Spawn the Pawn and connect it to that controller
         GameObject newPawnObj = Instantiate(tankPawnPrefab, playerSpawnTransform.position, playerSpawnTransform.rotation);
-        newPawnObj.name = "Player 1's Tank"
 
         // Get the PlayerController component and Pawn component
         Controller newController = newPlayerObj.GetComponent<Controller>();

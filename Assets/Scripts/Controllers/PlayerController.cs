@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerController : Controller
 {
     public KeyCode moveForwardKey;
@@ -13,6 +14,35 @@ public class PlayerController : Controller
     public override void Start()
     {
         base.Start();
+
+        // If manager exists
+        {
+            if (GameManager.instance != null)
+            {
+                // And if it can track players
+                if (GameManager.instance.players != null)
+                {
+                    // Register it to the GameManager
+                    GameManager.instance.players.Add(this);
+                }
+            }
+        }
+    }
+
+    public void OnDestroy()
+    {
+        // If manager exists
+        {
+            if (GameManager.instance != null)
+            {
+                // And if it can track players
+                if (GameManager.instance.players != null)
+                {
+                    // Remove it from the GameManager
+                    GameManager.instance.players.Remove(this);
+                }
+            }
+        }
     }
 
     // Update is called once per frame
