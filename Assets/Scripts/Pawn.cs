@@ -16,8 +16,8 @@ public abstract class Pawn : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        moveSpeed = 0;
-        turnSpeed = 0;
+        //moveSpeed = 0;
+        //turnSpeed = 0;
     }
 
     // Update is called once per frame
@@ -30,5 +30,6 @@ public abstract class Pawn : MonoBehaviour
     public abstract void MoveBackward();
     public abstract void RotateClockwise();
     public abstract void RotateCounterClockwise();
+    public abstract void Shoot();
 
 }
