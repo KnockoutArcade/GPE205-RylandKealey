@@ -156,7 +156,7 @@ MonoBehaviour:
   turnSpeed: 100
   shellPrefab: {fileID: 7004410049245381044, guid: f4170bb27fe5b2441ae27be3c71755cf, type: 3}
   fireForce: 1000
-  damageDone: 10
+  damageDone: 5
   shellLifespan: 2
 --- !u!114 &5255555016202445596
 MonoBehaviour:
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firepointTransform: {fileID: 358209586982816007}
-  shotsPerSecond: 2
+  shotsPerSecond: 5
 --- !u!114 &4575737498623762308
 MonoBehaviour:
   m_ObjectHideFlags: 0
