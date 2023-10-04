@@ -49,6 +49,17 @@ public class TankPawn : Pawn
         this.transform.Rotate(0.0f, -turnSpeed * Time.deltaTime, 0.0f, Space.Self);
         Debug.Log("RotateCounterClockwise");
     }
+    public override void RotateTowards(Vector3 targetPosition)
+    {
+        // Find the vector to our target
+        Vector3 vectorToTarget = targetPosition - transform.position;
+
+        // Find the rotation to look down that vector
+        Quaternion targetRotation = Quaternion.LookRotation(vectorToTarget, Vector3.up);
+
+        // Rotate closer to that vector, but don't rotate more than our turn speed allows in one frame
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+    }
     public override void Shoot()
     {
         shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
