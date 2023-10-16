@@ -15,6 +15,8 @@ public class AIController : Controller
     private float lastStateChangeTime;
 
     public GameObject target;
+
+    public float fleeDistance;
     #endregion
 
     // Start is called before the first frame update
@@ -36,9 +38,37 @@ public class AIController : Controller
     /// </summary>
     protected void MakeDecisions()
     {
-        Debug.Log("making decisions");
+        switch (currentState)
+        {
+            case AIState.Gaurd:
+                // Do work
+                DoIdleState();
+                //Check for transitions
+                if (IsDistanceLessThan(target, 10))
+                {
+                    ChangeState(AIState.Flee);
+                }
+                break;
 
-        DoSeekState();
+            case AIState.Attack:
+                // Do Work
+                DoAttackState();
+                //Check for transitions
+                if (!IsDistanceLessThan(target, 10))
+                {
+                    ChangeState(AIState.Gaurd);
+                }
+                break;
+
+            case AIState.Flee:
+                DoFleeState();
+
+                if (!IsDistanceLessThan(target, 10))
+                {
+                    ChangeState(AIState.Attack);
+                }
+                break;
+        }
     }
 
     public virtual void ChangeState(AIState newState)
@@ -53,6 +83,24 @@ public class AIController : Controller
     public void DoSeekState()
     {
         Seek(target);
+    }
+
+    public virtual void DoIdleState()
+    {
+        // Do Nothing
+    }
+
+    public virtual void DoAttackState()
+    {
+        // Chase
+        Seek(target);
+        // Shoot
+        Shoot();
+    }
+
+    public virtual void DoFleeState()
+    {
+        Flee();
     }
 
     public void Seek(GameObject target)
@@ -83,5 +131,40 @@ public class AIController : Controller
         pawn.RotateTowards(targetPosition);
 
         pawn.MoveForward();
+    }
+
+    protected bool IsDistanceLessThan(GameObject target, float distance)
+    {
+        if (Vector3.Distance(pawn.transform.position, target.transform.position) < distance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }   
+
+    public void Shoot()
+    {
+        // Tell the pawn to shoot
+        pawn.Shoot();
+    }
+
+    protected void Flee()
+    {
+        float targetDistance = Vector3.Distance(target.transform.position, pawn.transform.position);
+        float percentOfFleeDistance = targetDistance / fleeDistance;
+        percentOfFleeDistance = Mathf.Clamp01(percentOfFleeDistance);
+        float flippedPercentOfFleeDistance = 1 - percentOfFleeDistance;
+        
+        // Find vector to the target position
+        Vector3 vectorToTarget = target.transform.position - pawn.transform.position;
+        // Point target vector in the opposite direction
+        Vector3 vectorAwayFromTarget = -vectorToTarget;
+        // Find the vector we would travel down in order to flee
+        Vector3 fleeVector = vectorAwayFromTarget.normalized * (fleeDistance * flippedPercentOfFleeDistance);
+        // Seek the point that is "fleeVector" away from our current position
+        Seek(pawn.transform.position + fleeVector);
     }
 }
