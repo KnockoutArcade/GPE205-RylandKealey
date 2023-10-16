@@ -37,6 +37,8 @@ public class AIController : Controller
     protected void MakeDecisions()
     {
         Debug.Log("making decisions");
+
+        DoSeekState();
     }
 
     public virtual void ChangeState(AIState newState)
