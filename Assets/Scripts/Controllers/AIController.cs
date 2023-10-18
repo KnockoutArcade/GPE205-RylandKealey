@@ -5,7 +5,7 @@ using UnityEngine;
 public class AIController : Controller
 {
     #region Variables
-    public enum AIState { Gaurd, Chase, Flee, Patrol, Attack, BackToPost };
+    public enum AIState { Gaurd, Chase, Flee, Patrol, Attack, BackToPost, ChooseTarget };
 
     /// <summary>
     /// The current state of this FSM
@@ -17,6 +17,18 @@ public class AIController : Controller
     public GameObject target;
 
     public float fleeDistance;
+
+    /// <summary>
+    /// Array of waypoints for this AI to travel between
+    /// </summary>
+    public Transform[] waypoints;
+    public float waypointStopDistance;
+    private int currentWaypoint = 0;
+
+    /// <summary>
+    /// How far away this can hear things
+    /// </summary>
+    public float hearingDistance;
     #endregion
 
     // Start is called before the first frame update
@@ -40,10 +52,16 @@ public class AIController : Controller
     {
         switch (currentState)
         {
-            case AIState.Gaurd:
+            case AIState.Patrol:
                 // Do work
-                DoIdleState();
+                DoPatrolState();
                 //Check for transitions
+                // Check if we have a target
+                if (!IsHasTarget())
+                {
+                    ChangeState(AIState.ChooseTarget);
+                }
+
                 if (IsDistanceLessThan(target, 10))
                 {
                     ChangeState(AIState.Flee);
@@ -54,19 +72,36 @@ public class AIController : Controller
                 // Do Work
                 DoAttackState();
                 //Check for transitions
+                // Check if we have a target
+                if (!IsHasTarget())
+                {
+                    ChangeState(AIState.ChooseTarget);
+                }
+
                 if (!IsDistanceLessThan(target, 10))
                 {
-                    ChangeState(AIState.Gaurd);
+                    ChangeState(AIState.Patrol);
                 }
                 break;
 
             case AIState.Flee:
                 DoFleeState();
 
+                // Check if we have a target
+                if (!IsHasTarget())
+                {
+                    ChangeState(AIState.ChooseTarget);
+                }
                 if (!IsDistanceLessThan(target, 10))
                 {
                     ChangeState(AIState.Attack);
                 }
+                break;
+
+            case AIState.ChooseTarget:
+                TargetPlayerOne();
+
+                ChangeState(AIState.Patrol);
                 break;
         }
     }
@@ -101,6 +136,11 @@ public class AIController : Controller
     public virtual void DoFleeState()
     {
         Flee();
+    }
+
+    public virtual void DoPatrolState()
+    {
+        Patrol();
     }
 
     public void Seek(GameObject target)
@@ -166,5 +206,115 @@ public class AIController : Controller
         Vector3 fleeVector = vectorAwayFromTarget.normalized * (fleeDistance * flippedPercentOfFleeDistance);
         // Seek the point that is "fleeVector" away from our current position
         Seek(pawn.transform.position + fleeVector);
+    }
+
+    protected void Patrol()
+    {
+        // If we have a enough waypoints in our list to move to a current waypoint
+        if (waypoints.Length > currentWaypoint)
+        {
+            // Then seek that waypoint
+            Seek(waypoints[currentWaypoint]);
+            // If we are close enough, then increment to next waypoint
+            if (Vector3.Distance(pawn.transform.position, waypoints[currentWaypoint].position) < waypointStopDistance)
+            {
+                currentWaypoint++;
+            }
+        }
+        else
+        {
+            RestartPatrol();
+        }
+    }
+
+    protected void RestartPatrol()
+    {
+        // set the index to 0
+        currentWaypoint = 0;
+    }
+
+    public void TargetPlayerOne()
+    {
+        // If the gameManager exists
+        if (GameManager.instance != null)
+        {
+            Debug.Log("Found Game manager");
+            // and the array of players exists
+            if (GameManager.instance.players != null)
+            {
+                Debug.Log("Found Player list");
+                // ... and there are players in it
+                if (GameManager.instance.players.Count > 0)
+                {
+                    Debug.Log("Players in list");
+                    // Then target the gameObject of the pawn of the first player controller in the list
+                    target = GameManager.instance.players[0].pawn.gameObject;
+                }
+            }
+        }
+    }
+
+    protected bool IsHasTarget()
+    {
+        // return true if we have a target, false if not
+        return (target != null);
+    }
+
+    protected void TargetNearestTank()
+    {
+        // Get a list of all the tanks (pawns)
+        Pawn[] allTanks = FindObjectsOfType<Pawn>();
+
+        // Assume that the first tank is closest
+        Pawn closestTank = allTanks[0];
+        float closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
+
+        // Iterate through them one at a time
+        foreach (Pawn tank in allTanks)
+        {
+            // If this one is closer than the closest
+            if (Vector3.Distance(pawn.transform.position, tank.transform.position) <= closestTankDistance)
+            {
+                // It is the closest
+                closestTank = tank;
+                closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
+            }
+        }
+
+        // Target the closest tank
+        target = closestTank.gameObject;
+    }
+
+    public bool CanHear(GameObject Target)
+    {
+        // Get the target's noisemaker
+        NoiseMaker noiseMaker = target.GetComponent<NoiseMaker>();
+
+        // If they don't have one, they can't make noise, so return false
+        if (noiseMaker == null)
+        {
+            return false;
+        }
+
+        //If they are making 0 noise, they can't be heard
+        if (noiseMaker.volumeDistance <= 0)
+        {
+            return false;
+        }
+
+        // If they are making noise, add the volumeDistance in the noisemaker to the hearingdistance of this ai
+        float totalDistance = noiseMaker.volumeDistance + hearingDistance;
+
+        // If the distance between our pawn and the target is closer than this...
+        if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance)
+        {
+            // ... then we can hear the target
+            return true;
+        }
+        else
+        {
+            // ... otherwise they are too far away
+            return false;
+        }
     }
 }

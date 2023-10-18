@@ -25,6 +25,8 @@ public class TankPawn : Pawn
     public override void Update()
     {
         base.Update();
+
+        MakeNoise(0);
     }
 
     public override void MoveForward()
@@ -32,22 +34,26 @@ public class TankPawn : Pawn
         Vector3 direction = this.transform.forward;
         rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
         Debug.Log("MoveForward");
+        MakeNoise(5);
     }
     public override void MoveBackward()
     {
         Vector3 direction = this.transform.forward * -1;
         rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
         Debug.Log("MoveBackward");
+        MakeNoise(5);
     }
     public override void RotateClockwise()
     {
         this.transform.Rotate(0.0f, turnSpeed * Time.deltaTime, 0.0f, Space.Self);
         Debug.Log("RotateClockwise");
+        MakeNoise(5);
     }
     public override void RotateCounterClockwise()
     {
         this.transform.Rotate(0.0f, -turnSpeed * Time.deltaTime, 0.0f, Space.Self);
         Debug.Log("RotateCounterClockwise");
+        MakeNoise(5);
     }
     public override void RotateTowards(Vector3 targetPosition)
     {
@@ -59,9 +65,25 @@ public class TankPawn : Pawn
 
         // Rotate closer to that vector, but don't rotate more than our turn speed allows in one frame
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+        // Make some noise
+        MakeNoise(5);
     }
     public override void Shoot()
     {
         shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
+
+        // Make some noise
+        MakeNoise(10);
+    }
+    public override void MakeNoise(float volume)
+    {
+        NoiseMaker noiseMaker = GetComponent<NoiseMaker>();
+
+        if (noiseMaker != null)
+        {
+            noiseMaker.volumeDistance = volume;
+            Debug.Log("Making Noise: " + volume);
+        }
     }
 }
