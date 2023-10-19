@@ -29,6 +29,12 @@ public class AIController : Controller
     /// How far away this can hear things
     /// </summary>
     public float hearingDistance;
+
+    /// <summary>
+    /// How far this can see things
+    /// </summary>
+    public float maxVisionDistance;
+    public float fieldOfView;
     #endregion
 
     // Start is called before the first frame update
@@ -48,7 +54,7 @@ public class AIController : Controller
     /// <summary>
     /// Autonomously make decisions about what to do in the current state
     /// </summary>
-    protected void MakeDecisions()
+    protected virtual void MakeDecisions()
     {
         switch (currentState)
         {
@@ -123,6 +129,11 @@ public class AIController : Controller
     public virtual void DoIdleState()
     {
         // Do Nothing
+    }
+
+    public virtual void DoGaurdState()
+    {
+        // Stay put
     }
 
     public virtual void DoAttackState()
@@ -285,6 +296,8 @@ public class AIController : Controller
         target = closestTank.gameObject;
     }
 
+    #region Senses
+
     public bool CanHear(GameObject Target)
     {
         // Get the target's noisemaker
@@ -317,4 +330,46 @@ public class AIController : Controller
             return false;
         }
     }
+
+    public bool CanSee(GameObject target)
+    {
+        Debug.Log("Finding Target");
+        // Find the vector from the agent to the target
+        Vector3 agentToTargetVector = target.transform.position - transform.position;
+        // Find the angle between the direction our agent is facing (forward in local space) and the vector to the target.
+        float angleToTarget = Vector3.Angle(agentToTargetVector, pawn.transform.forward);
+        // if that angle is less than our field of view
+        if (angleToTarget < fieldOfView)
+        {
+            Debug.Log("Target in FOV");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, agentToTargetVector, maxVisionDistance);
+            Debug.Log("Hit " + hit.collider.name);
+
+            // If we can see it
+            if (hit.collider != null) 
+            {
+                Debug.Log("Hit " + hit.collider);
+                if (hit.collider == target)
+                {
+                    return true;
+                    Debug.Log("Hit Player");
+                }
+                else
+                {
+                    return false;
+                    Debug.Log("Hit not the player");
+                }
+            }
+            else
+            {
+                Debug.Log("Hit Nothing");
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+    #endregion
 }

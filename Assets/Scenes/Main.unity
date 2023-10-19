@@ -416,10 +416,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 593816792}
+      addedObject: {fileID: 593816800}
     - targetCorrespondingSourceObject: {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 593816800}
+      addedObject: {fileID: 593816801}
   m_SourcePrefab: {fileID: 100100000, guid: 78e2cc5415add69438176227144b9970, type: 3}
 --- !u!1 &593816790 stripped
 GameObject:
@@ -437,28 +437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcbdb0bee8160cd468472eac9adec8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &593816792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 593816790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cce440d149bb974a8cb6ef66ce50cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pawn: {fileID: 593816791}
-  currentState: 3
-  target: {fileID: 0}
-  fleeDistance: 0
-  waypoints:
-  - {fileID: 1990794828}
-  - {fileID: 1237989159}
-  - {fileID: 1742097709}
-  - {fileID: 835621940}
-  waypointStopDistance: 5
 --- !u!114 &593816800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +449,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c263891df9dc7f740a1c9a9462acdb27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  volumeDistance: 0
+--- !u!114 &593816801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593816790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56201cd9ecbe1ae4186d42284d7c34ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawn: {fileID: 593816791}
+  currentState: 3
+  target: {fileID: 0}
+  fleeDistance: 0
+  waypoints: []
+  waypointStopDistance: 0
+  hearingDistance: 0
+  maxVisionDistance: 0
+  fieldOfView: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,6 +701,115 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1379773497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1189605347
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.72
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.2069442
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9783528
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 156.113
+      objectReference: {fileID: 0}
+    - target: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: m_Name
+      value: UATankNoCam (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217398107563361103, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: moveSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217398107563361103, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: turnSpeed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 5255555016202445596, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      propertyPath: shotsPerSecond
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1189605349}
+  m_SourcePrefab: {fileID: 100100000, guid: 78e2cc5415add69438176227144b9970, type: 3}
+--- !u!1 &1189605348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
+  m_PrefabInstance: {fileID: 1189605347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1189605349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189605348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06feab7dcc8ba464bb5ef3b726a73903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawn: {fileID: 1189605350}
+  currentState: 0
+  target: {fileID: 0}
+  fleeDistance: 0
+  waypoints: []
+  waypointStopDistance: 0
+  hearingDistance: 0
+  maxVisionDistance: 10
+  fieldOfView: 45
+--- !u!114 &1189605350 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3217398107563361103, guid: 78e2cc5415add69438176227144b9970, type: 3}
+  m_PrefabInstance: {fileID: 1189605347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189605348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbdb0bee8160cd468472eac9adec8ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1237989158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,3 +1193,4 @@ SceneRoots:
   - {fileID: 86671084}
   - {fileID: 593816789}
   - {fileID: 1379773497}
+  - {fileID: 1189605347}
