@@ -342,22 +342,30 @@ public class AIController : Controller
         if (angleToTarget < fieldOfView)
         {
             Debug.Log("Target in FOV");
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, agentToTargetVector, maxVisionDistance);
-            Debug.Log("Hit " + hit.collider.name);
+
+            // Raise the origin slightly for vision
+            Vector3 rayOrigin = transform.position;
+            rayOrigin.y = transform.lossyScale.y / 2;
+
+            // Define our raycast hit
+            RaycastHit hit; 
+            // Do a raycast then output the results to hit
+            Physics.Raycast(rayOrigin, agentToTargetVector, out hit, maxVisionDistance);
+            Debug.Log(target);
 
             // If we can see it
             if (hit.collider != null) 
             {
                 Debug.Log("Hit " + hit.collider);
-                if (hit.collider == target)
+                if (hit.collider.gameObject == target)
                 {
-                    return true;
                     Debug.Log("Hit Player");
+                    return true;
                 }
                 else
                 {
-                    return false;
                     Debug.Log("Hit not the player");
+                    return false;
                 }
             }
             else
