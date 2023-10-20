@@ -25,34 +25,32 @@ public class TankPawn : Pawn
     public override void Update()
     {
         base.Update();
-
-        MakeNoise(0);
     }
 
     public override void MoveForward()
     {
         Vector3 direction = this.transform.forward;
         rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
-        Debug.Log("MoveForward");
+        //Debug.Log("MoveForward");
         MakeNoise(5);
     }
     public override void MoveBackward()
     {
         Vector3 direction = this.transform.forward * -1;
         rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
-        Debug.Log("MoveBackward");
+        //Debug.Log("MoveBackward");
         MakeNoise(5);
     }
     public override void RotateClockwise()
     {
         this.transform.Rotate(0.0f, turnSpeed * Time.deltaTime, 0.0f, Space.Self);
-        Debug.Log("RotateClockwise");
+        //Debug.Log("RotateClockwise");
         MakeNoise(5);
     }
     public override void RotateCounterClockwise()
     {
         this.transform.Rotate(0.0f, -turnSpeed * Time.deltaTime, 0.0f, Space.Self);
-        Debug.Log("RotateCounterClockwise");
+        //Debug.Log("RotateCounterClockwise");
         MakeNoise(5);
     }
     public override void RotateTowards(Vector3 targetPosition)
@@ -83,6 +81,11 @@ public class TankPawn : Pawn
         if (noiseMaker != null)
         {
             noiseMaker.volumeDistance = volume;
+            Debug.Log(noiseMaker.volumeDistance);
+        }
+        else
+        {
+            //Debug.Log("No noise maker on object");
         }
     }
 }

@@ -312,16 +312,19 @@ public class AIController : Controller
         //If they are making 0 noise, they can't be heard
         if (noiseMaker.volumeDistance <= 0)
         {
+            Debug.Log("noisMaker not making noise");
             return false;
         }
 
         // If they are making noise, add the volumeDistance in the noisemaker to the hearingdistance of this ai
         float totalDistance = noiseMaker.volumeDistance + hearingDistance;
+        Debug.Log(totalDistance);
 
         // If the distance between our pawn and the target is closer than this...
         if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance)
         {
             // ... then we can hear the target
+            Debug.Log("Can hear " + target);
             return true;
         }
         else
@@ -333,7 +336,7 @@ public class AIController : Controller
 
     public bool CanSee(GameObject target)
     {
-        Debug.Log("Finding Target");
+        //Debug.Log("Finding Target");
         // Find the vector from the agent to the target
         Vector3 agentToTargetVector = target.transform.position - transform.position;
         // Find the angle between the direction our agent is facing (forward in local space) and the vector to the target.
@@ -341,7 +344,7 @@ public class AIController : Controller
         // if that angle is less than our field of view
         if (angleToTarget < fieldOfView)
         {
-            Debug.Log("Target in FOV");
+            //Debug.Log("Target in FOV");
 
             // Raise the origin slightly for vision
             Vector3 rayOrigin = transform.position;
@@ -351,26 +354,26 @@ public class AIController : Controller
             RaycastHit hit; 
             // Do a raycast then output the results to hit
             Physics.Raycast(rayOrigin, agentToTargetVector, out hit, maxVisionDistance);
-            Debug.Log(target);
+            //Debug.Log(target);
 
             // If we can see it
             if (hit.collider != null) 
             {
-                Debug.Log("Hit " + hit.collider);
+                //Debug.Log("Hit " + hit.collider);
                 if (hit.collider.gameObject == target)
                 {
-                    Debug.Log("Hit Player");
+                    //Debug.Log("Hit Player");
                     return true;
                 }
                 else
                 {
-                    Debug.Log("Hit not the player");
+                    //Debug.Log("Hit not the player");
                     return false;
                 }
             }
             else
             {
-                Debug.Log("Hit Nothing");
+                //Debug.Log("Hit Nothing");
                 return false;
             }
         }

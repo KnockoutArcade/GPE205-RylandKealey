@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIBehavior_Gaurd : AIController
+public class AIBehavior_Patroller : AIController
 {
     // Start is called before the first frame update
     void Start()
@@ -20,9 +20,9 @@ public class AIBehavior_Gaurd : AIController
     {
         switch (currentState)
         {
-            case AIState.Gaurd:
+            case AIState.Patrol:
                 // Do work
-                DoGaurdState();
+                DoPatrolState();
                 //Check for transitions
                 // Check if we have a target
                 if (!IsHasTarget())
@@ -30,9 +30,9 @@ public class AIBehavior_Gaurd : AIController
                     ChangeState(AIState.ChooseTarget);
                 }
 
-                if (IsDistanceLessThan(target, 10))
+                if (IsDistanceLessThan(target, 3) || CanHear(target))
                 {
-                    ChangeState(AIState.Flee);
+                    ChangeState(AIState.Attack);
                 }
                 break;
 
@@ -46,23 +46,9 @@ public class AIBehavior_Gaurd : AIController
                     ChangeState(AIState.ChooseTarget);
                 }
 
-                if (!IsDistanceLessThan(target, 10))
+                if (!IsDistanceLessThan(target, 3) && !CanHear(target))
                 {
                     ChangeState(AIState.Patrol);
-                }
-                break;
-
-            case AIState.Flee:
-                DoFleeState();
-
-                // Check if we have a target
-                if (!IsHasTarget())
-                {
-                    ChangeState(AIState.ChooseTarget);
-                }
-                if (!IsDistanceLessThan(target, 10))
-                {
-                    ChangeState(AIState.Attack);
                 }
                 break;
 

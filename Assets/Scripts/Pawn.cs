@@ -12,6 +12,7 @@ public abstract class Pawn : MonoBehaviour
     /// Variable for the rotation speed of the pawn
     /// </summary>
     public float turnSpeed;
+    public bool isMakingNoise;
     
     // Start is called before the first frame update
     public virtual void Start()
@@ -23,7 +24,10 @@ public abstract class Pawn : MonoBehaviour
     // Update is called once per frame
     public virtual void Update()
     {
-        
+        if (!isMakingNoise)
+        {
+            MakeNoise(0);
+        }
     }
 
     public abstract void MoveForward();

@@ -59,22 +59,33 @@ public class PlayerController : Controller
         if (Input.GetKey(moveForwardKey))
         {
             pawn.MoveForward();
+            pawn.isMakingNoise = true;
         }
         if (Input.GetKey(moveBackwardKey))
         {
             pawn.MoveBackward();
+            pawn.isMakingNoise = true;
         }
         if (Input.GetKey(rotateClockwiseKey))
         {
             pawn.RotateClockwise();
+            pawn.isMakingNoise = true;
         }
         if (Input.GetKey(rotateCounterClockwiseKey))
         {
             pawn.RotateCounterClockwise();
+            pawn.isMakingNoise = true;
         }
         if (Input.GetKeyDown(shootKey))
         {
             pawn.Shoot();
+            pawn.isMakingNoise = true;
+        }
+
+        // If we are not inputting anything, don't make noise
+        if (!Input.GetKey(moveForwardKey) && !Input.GetKey(moveBackwardKey) && !Input.GetKey(rotateClockwiseKey) && !Input.GetKey(rotateCounterClockwiseKey) && !Input.GetKeyDown(shootKey))
+        {
+            pawn.isMakingNoise = false;
         }
     }
 }
