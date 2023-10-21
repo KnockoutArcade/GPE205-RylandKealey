@@ -81,7 +81,7 @@ public class TankPawn : Pawn
         if (noiseMaker != null)
         {
             noiseMaker.volumeDistance = volume;
-            Debug.Log(noiseMaker.volumeDistance);
+            //Debug.Log(noiseMaker.volumeDistance);
         }
         else
         {

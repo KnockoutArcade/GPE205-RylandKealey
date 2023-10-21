@@ -267,8 +267,23 @@ public class AIController : Controller
 
     protected bool IsHasTarget()
     {
-        // return true if we have a target, false if not
-        return (target != null);
+        // If we have a target
+        if (target != null)
+        {
+            // If the target exists, return true
+            if (GameObject.Find(target.gameObject.name) != null)
+            {
+               return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 
     protected void TargetNearestTank()
@@ -278,20 +293,25 @@ public class AIController : Controller
 
         // Assume that the first tank is closest
         Pawn closestTank = allTanks[0];
+        // If this is the first tank, skip it
+        if (closestTank == this.pawn)
+        {
+            closestTank = allTanks[1];
+        }
         float closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
 
         // Iterate through them one at a time
         foreach (Pawn tank in allTanks)
         {
             // If this one is closer than the closest
-            if (Vector3.Distance(pawn.transform.position, tank.transform.position) <= closestTankDistance)
+            if ((Vector3.Distance(pawn.transform.position, tank.transform.position) <= closestTankDistance) && (tank != this.pawn))
             {
                 // It is the closest
                 closestTank = tank;
                 closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
             }
         }
-
+        Debug.Log(closestTank);
         // Target the closest tank
         target = closestTank.gameObject;
     }
@@ -312,7 +332,7 @@ public class AIController : Controller
         //If they are making 0 noise, they can't be heard
         if (noiseMaker.volumeDistance <= 0)
         {
-            Debug.Log("noisMaker not making noise");
+            //Debug.Log("noisMaker not making noise");
             return false;
         }
 
@@ -324,7 +344,7 @@ public class AIController : Controller
         if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance)
         {
             // ... then we can hear the target
-            Debug.Log("Can hear " + target);
+            //Debug.Log("Can hear " + target);
             return true;
         }
         else
