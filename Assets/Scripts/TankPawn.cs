@@ -5,18 +5,21 @@ using UnityEngine;
 public class TankPawn : Pawn
 {
     public GameObject shellPrefab;
+    public GameObject minePrefab;
     public float fireForce;
     public float damageDone;
     public float shellLifespan;
     protected TankShooter shooter;
+    protected MineDeployer mineDeployer;
     private Rigidbody rb;
 
     // Start is called before the first frame update
     public override void Start()
     {
         base.Start();
+        // Get components
         shooter = GetComponent<TankShooter>();
-
+        mineDeployer = GetComponent<MineDeployer>();
         rb = GetComponent<Rigidbody>();
 
     }
@@ -70,6 +73,13 @@ public class TankPawn : Pawn
     public override void Shoot()
     {
         shooter.Shoot(shellPrefab, fireForce, damageDone, shellLifespan);
+
+        // Make some noise
+        MakeNoise(10);
+    }
+    public override void LayMine()
+    {
+        mineDeployer.LayMine(minePrefab, transform.position);
 
         // Make some noise
         MakeNoise(10);

@@ -10,6 +10,7 @@ public class PlayerController : Controller
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode shootKey;
+    public KeyCode layMineKey;
     
     // Start is called before the first frame update
     public override void Start()
@@ -81,9 +82,14 @@ public class PlayerController : Controller
             pawn.Shoot();
             pawn.isMakingNoise = true;
         }
+        if (Input.GetKeyDown(layMineKey))
+        {
+            pawn.LayMine();
+            pawn.isMakingNoise = true;
+        }
 
         // If we are not inputting anything, don't make noise
-        if (!Input.GetKey(moveForwardKey) && !Input.GetKey(moveBackwardKey) && !Input.GetKey(rotateClockwiseKey) && !Input.GetKey(rotateCounterClockwiseKey) && !Input.GetKeyDown(shootKey))
+        if (!Input.GetKey(moveForwardKey) && !Input.GetKey(moveBackwardKey) && !Input.GetKey(rotateClockwiseKey) && !Input.GetKey(rotateCounterClockwiseKey) && !Input.GetKeyDown(shootKey) && !Input.GetKeyDown(layMineKey))
         {
             pawn.isMakingNoise = false;
         }

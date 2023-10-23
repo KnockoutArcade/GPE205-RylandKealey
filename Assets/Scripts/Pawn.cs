@@ -36,6 +36,7 @@ public abstract class Pawn : MonoBehaviour
     public abstract void RotateCounterClockwise();
     public abstract void RotateTowards(Vector3 targetPosition);
     public abstract void Shoot();
+    public abstract void LayMine();
     public abstract void MakeNoise(float volume);
 
 }

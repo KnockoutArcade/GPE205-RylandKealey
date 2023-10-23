@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 5255555016202445596}
   - component: {fileID: 4575737498623762308}
   - component: {fileID: 3468124724908092872}
+  - component: {fileID: 442982114696645977}
   m_Layer: 0
   m_Name: UATank
   m_TagString: Untagged
@@ -155,7 +156,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 50
   turnSpeed: 100
+  isMakingNoise: 0
   shellPrefab: {fileID: 7004410049245381044, guid: f4170bb27fe5b2441ae27be3c71755cf, type: 3}
+  minePrefab: {fileID: 1518733064355300706, guid: f28e12270d38c854cb885f607166c8c4, type: 3}
   fireForce: 1000
   damageDone: 5
   shellLifespan: 2
@@ -199,6 +202,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volumeDistance: 0
+--- !u!114 &442982114696645977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643167606172717222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f3c5c5baaf7b240aa9c27e473587f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &648574801369249933
 GameObject:
   m_ObjectHideFlags: 0
