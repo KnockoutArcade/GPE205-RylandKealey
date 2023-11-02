@@ -155,12 +155,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcbdb0bee8160cd468472eac9adec8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 50
-  turnSpeed: 100
+  moveSpeed: 80
+  turnSpeed: 175
   isMakingNoise: 0
   shellPrefab: {fileID: 7004410049245381044, guid: f4170bb27fe5b2441ae27be3c71755cf, type: 3}
   minePrefab: {fileID: 1518733064355300706, guid: f28e12270d38c854cb885f607166c8c4, type: 3}
-  fireForce: 1000
+  fireForce: 2000
   damageDone: 5
   shellLifespan: 2
 --- !u!114 &5255555016202445596
