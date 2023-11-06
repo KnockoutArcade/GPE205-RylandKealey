@@ -163,6 +163,7 @@ MonoBehaviour:
   fireForce: 2000
   damageDone: 5
   shellLifespan: 2
+  playerController: {fileID: 0}
 --- !u!114 &5255555016202445596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firepointTransform: {fileID: 358209586982816007}
-  shotsPerSecond: 5
+  shotsPerSecond: 1
 --- !u!114 &4575737498623762308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f3c5c5baaf7b240aa9c27e473587f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfMines: 2
 --- !u!114 &5394564269000081550
 MonoBehaviour:
   m_ObjectHideFlags: 0

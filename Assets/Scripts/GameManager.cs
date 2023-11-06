@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,15 +16,28 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public List<PlayerController> players;
 
+    /// <summary>
+    /// List of all enemies in the scene
+    /// </summary>
+    public List<AIController> enemies;
     
     // Prefabs
     public GameObject playerControllerPrefab;
+    public GameObject[] enemyControllerPrefab;
+    public int enemyControllerPrefabIndex;
     public GameObject tankPawnPrefab;
-    public Transform playerSpawnTransform;
+    public GameObject[] enemyPawnPrefab;
+    public int enemyPawnPrefabIndex;
+    // Array of Player Spawns
+    public PawnSpawnPoint[] playerSpawnTransforms;
+    public int randomPlayerSpawn;
+    // List of enemy spawns
+    public EnemySpawnPoint[] enemySpawnTransforms;
+    public int randomEnemySpawn;
     #endregion Variables
 
     private void Awake()
-    { 
+    {
         if (instance == null)
         {
             instance = this;
@@ -36,11 +50,23 @@ public class GameManager : MonoBehaviour
 
         // Allocate Memory for player list
         players = new List<PlayerController>();
+        // Allocate Memory for enemy list
+        enemies = new List<AIController>();
+    }
+
+    private void Update()
+    {
+        if (players.Count == 0)
+        {
+            SpawnPlayer();
+        }
     }
 
     private void Start()
     {
         SpawnPlayer();
+
+        SpawnEnemies(3);
     }
 
     public void SpawnPlayer()
@@ -48,8 +74,12 @@ public class GameManager : MonoBehaviour
         // Spawn the Player Controller at (0, 0, 0) with no rotation
         GameObject newPlayerObj = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity);
 
+        // Find all the spawnPoints in the level
+        playerSpawnTransforms = FindObjectsByType<PawnSpawnPoint>(FindObjectsSortMode.None);
+        randomPlayerSpawn = UnityEngine.Random.Range(0, playerSpawnTransforms.Length - 1);
+
         // Spawn the Pawn and connect it to that controller
-        GameObject newPawnObj = Instantiate(tankPawnPrefab, playerSpawnTransform.position, playerSpawnTransform.rotation);
+        GameObject newPawnObj = Instantiate(tankPawnPrefab, playerSpawnTransforms[randomPlayerSpawn].transform.position, playerSpawnTransforms[randomPlayerSpawn].transform.rotation);
 
         // Get the PlayerController component and Pawn component
         Controller newController = newPlayerObj.GetComponent<Controller>();
@@ -57,5 +87,55 @@ public class GameManager : MonoBehaviour
 
         // Hook them up
         newController.pawn = newPawn;
+    }
+
+    public void SpawnEnemies(int amount)
+    {
+        // Find all of the enemy spawn Points in the level
+        enemySpawnTransforms = FindObjectsByType<EnemySpawnPoint>(FindObjectsSortMode.None);
+
+        // Put the array into a list to make it easier to access
+        List<EnemySpawnPoint> validSpawnPoints = new List<EnemySpawnPoint>();
+
+        foreach (EnemySpawnPoint spawnPoint in enemySpawnTransforms)
+        {
+            validSpawnPoints.Add(spawnPoint);
+        }
+
+        // Choose a random spawn point index
+        randomEnemySpawn = UnityEngine.Random.Range(0, validSpawnPoints.Count - 1);
+
+        int i = 0;
+        // For the number of enemies we want to spawn
+        while (i < amount)
+        {
+            // If we have run out of valid spawn points, break
+            if (validSpawnPoints.Count == 0)
+            {
+                break;
+            }
+
+            // Choose a random AI type
+            enemyControllerPrefabIndex = UnityEngine.Random.Range(0, enemyControllerPrefab.Length);
+
+            // Spawn an enemy controller
+            GameObject newEnemyController = Instantiate(enemyControllerPrefab[enemyControllerPrefabIndex], Vector3.zero, Quaternion.identity);
+
+            // Spawn the Pawn
+            GameObject newEnemyObj = Instantiate(enemyPawnPrefab[0], validSpawnPoints[randomEnemySpawn].transform.position, validSpawnPoints[randomEnemySpawn].transform.rotation);
+
+            // remove the transform we just used
+            validSpawnPoints.Remove(validSpawnPoints[randomEnemySpawn]);
+            randomEnemySpawn = UnityEngine.Random.Range(0, validSpawnPoints.Count - 1);
+
+            // Get the PlayerController component and Pawn component
+            Controller newController = newEnemyController.GetComponent<Controller>();
+            Pawn newPawn = newEnemyObj.GetComponent<Pawn>();
+
+            // Hook them up
+            newController.pawn = newPawn;
+
+            i++;
+        }
     }
 }

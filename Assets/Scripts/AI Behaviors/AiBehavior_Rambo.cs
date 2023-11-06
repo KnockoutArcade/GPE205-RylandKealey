@@ -15,7 +15,7 @@ public class AiBehavior_Rambo : AIController
     {
         base.Update();
 
-        Debug.Log(GameObject.Find(target.gameObject.name) != null);
+        //Debug.Log(GameObject.Find(target.gameObject.name) != null);
     }
 
     protected override void MakeDecisions()

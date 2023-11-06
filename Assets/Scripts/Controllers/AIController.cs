@@ -41,14 +41,48 @@ public class AIController : Controller
     public override void Start()
     {
         base.Start();
+
+        // If manager exists
+        {
+            if (GameManager.instance != null)
+            {
+                // And if it can track enemies
+                if (GameManager.instance.enemies != null)
+                {
+                    // Register it to the GameManager
+                    GameManager.instance.enemies.Add(this);
+                }
+            }
+        }
     }
 
     // Update is called once per frame
     public override void Update()
     {
         base.Update();
+        
+        if (pawn == null)
+        {
+            // If manager exists
+            {
+                if (GameManager.instance != null)
+                {
+                    // And if it can track players
+                    if (GameManager.instance.enemies != null)
+                    {
+                        // Remove it from the GameManager
+                        GameManager.instance.enemies.Remove(this);
+                    }
+                }
+            }
+
+            Destroy(this.gameObject);
+        }
 
         MakeDecisions();
+
+        
+
     }
 
     /// <summary>
@@ -358,7 +392,7 @@ public class AIController : Controller
     {
         //Debug.Log("Finding Target");
         // Find the vector from the agent to the target
-        Vector3 agentToTargetVector = target.transform.position - transform.position;
+        Vector3 agentToTargetVector = target.transform.position - pawn.transform.position;
         // Find the angle between the direction our agent is facing (forward in local space) and the vector to the target.
         float angleToTarget = Vector3.Angle(agentToTargetVector, pawn.transform.forward);
         // if that angle is less than our field of view
@@ -367,14 +401,14 @@ public class AIController : Controller
             //Debug.Log("Target in FOV");
 
             // Raise the origin slightly for vision
-            Vector3 rayOrigin = transform.position;
-            rayOrigin.y = transform.lossyScale.y / 2;
+            Vector3 rayOrigin = pawn.transform.position;
+            rayOrigin.y = pawn.transform.lossyScale.y / 2;
 
             // Define our raycast hit
             RaycastHit hit; 
             // Do a raycast then output the results to hit
             Physics.Raycast(rayOrigin, agentToTargetVector, out hit, maxVisionDistance);
-            //Debug.Log(target);
+            //Debug.DrawRay(rayOrigin, agentToTargetVector, Color.white, 5.0f);
 
             // If we can see it
             if (hit.collider != null) 

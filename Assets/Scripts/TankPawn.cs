@@ -11,6 +11,7 @@ public class TankPawn : Pawn
     public float shellLifespan;
     protected TankShooter shooter;
     protected MineDeployer mineDeployer;
+    public PlayerController playerController;
     private Rigidbody rb;
 
     // Start is called before the first frame update
@@ -20,6 +21,7 @@ public class TankPawn : Pawn
         // Get components
         shooter = GetComponent<TankShooter>();
         mineDeployer = GetComponent<MineDeployer>();
+        playerController = GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody>();
 
     }
@@ -28,6 +30,13 @@ public class TankPawn : Pawn
     public override void Update()
     {
         base.Update();
+    }
+
+
+    // When we die
+    public void OnDestroy()
+    {
+        Destroy(playerController);
     }
 
     public override void MoveForward()

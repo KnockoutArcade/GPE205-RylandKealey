@@ -30,6 +30,8 @@ public class TankShooter : Shooter
         {
             canShoot = true;
         }
+
+        secondsPerShot = 1 / shotsPerSecond;
     }
 
     public override void Shoot(GameObject shellPrefab, float fireForce, float damageDone, float lifespan)

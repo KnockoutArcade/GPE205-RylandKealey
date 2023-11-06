@@ -120,37 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &74865975
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 74865976}
-  m_Layer: 0
-  m_Name: Player1Spawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &74865976
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 74865975}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5.99}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &476856144
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,6 +157,8 @@ MonoBehaviour:
   cols: 2
   roomWidth: 50
   roomHeight: 50
+  mapSeed: 0
+  isMapOfTheDay: 0
 --- !u!4 &476856146
 Transform:
   m_ObjectHideFlags: 0
@@ -327,9 +298,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: []
+  enemies: []
   playerControllerPrefab: {fileID: 5618601506961674256, guid: 23b9eee4594e1654a839caf84bcba108, type: 3}
+  enemyControllerPrefab:
+  - {fileID: 5618601506961674256, guid: 9010b4e4550077e429623ac51f9d8c80, type: 3}
+  - {fileID: 5618601506961674256, guid: 0b7b62ae5caa53947b876a1716801e3b, type: 3}
+  enemyControllerPrefabIndex: 0
   tankPawnPrefab: {fileID: 643167606172717222, guid: 03f4565193922f444a6d955c0af7f379, type: 3}
-  playerSpawnTransform: {fileID: 74865976}
+  enemyPawnPrefab:
+  - {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
+  enemyPawnPrefabIndex: 0
+  playerSpawnTransforms: []
+  randomPlayerSpawn: 0
+  enemySpawnTransforms: []
+  randomEnemySpawn: 0
 --- !u!4 &2047978867
 Transform:
   m_ObjectHideFlags: 0
@@ -352,4 +334,3 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 476856146}
   - {fileID: 2047978867}
-  - {fileID: 74865976}

@@ -31,21 +31,6 @@ public class PlayerController : Controller
         }
     }
 
-    public void OnDestroy()
-    {
-        // If manager exists
-        {
-            if (GameManager.instance != null)
-            {
-                // And if it can track players
-                if (GameManager.instance.players != null)
-                {
-                    // Remove it from the GameManager
-                    GameManager.instance.players.Remove(this);
-                }
-            }
-        }
-    }
 
     // Update is called once per frame
     public override void Update()
@@ -53,6 +38,24 @@ public class PlayerController : Controller
         base.Update();
 
         ProcessInputs();
+
+        if (pawn == null)
+        {
+            // If manager exists
+            {
+                if (GameManager.instance != null)
+                {
+                    // And if it can track players
+                    if (GameManager.instance.players != null)
+                    {
+                        // Remove it from the GameManager
+                        GameManager.instance.players.Remove(this);
+                    }
+                }
+            }
+
+            Destroy(this.gameObject);
+        }
     }
 
     public void ProcessInputs()

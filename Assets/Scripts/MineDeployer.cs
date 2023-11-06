@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class MineDeployer : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    public float numberOfMines;
+    
     public virtual void LayMine(GameObject prefab, Vector3 pos)
     {
-        // Instantiate the Mine
-        GameObject newMine = Instantiate(prefab, pos, Quaternion.identity);
+        // Make sure we don't run out of mines
+        if (numberOfMines > 0)
+        {
+            // Instantiate the Mine
+            GameObject newMine = Instantiate(prefab, pos, Quaternion.identity);
+
+            numberOfMines--;
+        }
     }
 }
