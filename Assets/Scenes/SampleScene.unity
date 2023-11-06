@@ -158,7 +158,7 @@ MonoBehaviour:
   roomWidth: 50
   roomHeight: 50
   mapSeed: 0
-  isMapOfTheDay: 0
+  isMapOfTheDay: 1
 --- !u!4 &476856146
 Transform:
   m_ObjectHideFlags: 0
