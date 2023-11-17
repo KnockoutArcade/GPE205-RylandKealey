@@ -34,6 +34,14 @@ public class GameManager : MonoBehaviour
     // List of enemy spawns
     public EnemySpawnPoint[] enemySpawnTransforms;
     public int randomEnemySpawn;
+
+    // Game States
+    public GameObject TitleScreenStateObject;
+    public GameObject MainMenuStateObject;
+    public GameObject OptionsScreenStateObject;
+    public GameObject CreditsScreenStateObject;
+    public GameObject GameplayStateObject;
+    public GameObject GameOverScreenStateObject;
     #endregion Variables
 
     private void Awake()
@@ -56,17 +64,19 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (players.Count == 0)
-        {
-            SpawnPlayer();
-        }
+        ///if (players.Count == 0)
+        ///{
+        ///    SpawnPlayer();
+        ///}
     }
 
     private void Start()
     {
-        SpawnPlayer();
+        ActivateTitleScreen();
+        
+        ///SpawnPlayer();
 
-        SpawnEnemies(3);
+        ///SpawnEnemies(3);
     }
 
     public void SpawnPlayer()
@@ -138,4 +148,80 @@ public class GameManager : MonoBehaviour
             i++;
         }
     }
+
+    #region Gameplay State Scripts
+
+    private void DeactivateAllGameStates()
+    {
+        // Deactivate all game states
+        TitleScreenStateObject.SetActive(false);
+        MainMenuStateObject.SetActive(false);
+        OptionsScreenStateObject.SetActive(false);
+        CreditsScreenStateObject.SetActive(false);
+        GameplayStateObject.SetActive(false);
+        GameOverScreenStateObject.SetActive(false);
+    }
+
+    public void ActivateTitleScreen()
+    {
+        // First, make sure all other game states are deactivated
+        DeactivateAllGameStates();
+
+        // Then, make the title screen object activate
+        TitleScreenStateObject.SetActive(true);
+
+        // TODO : Whatever needs to happen when activating the title screen
+    }
+    public void ActivateMainMenuScreen()
+    {
+        // First, make sure all other game states are deactivated
+        DeactivateAllGameStates();
+
+        // Then, make the screen object activate
+        MainMenuStateObject.SetActive(true);
+
+        // TODO : Whatever needs to happen when activating the screen
+    }
+    public void ActivateOptionsScreen()
+    {
+        // First, make sure all other game states are deactivated
+        DeactivateAllGameStates();
+
+        // Then, make the screen object activate
+        OptionsScreenStateObject.SetActive(true);
+
+        // TODO : Whatever needs to happen when activating the screen
+    }
+    public void ActivateCreditsScreen()
+    {
+        // First, make sure all other game states are deactivated
+        DeactivateAllGameStates();
+
+        // Then, make the screen object activate
+        CreditsScreenStateObject.SetActive(true);
+
+        // TODO : Whatever needs to happen when activating the screen
+    }
+    public void ActivateGameplayScreen()
+    {
+        // First, make sure all other game states are deactivated
+        DeactivateAllGameStates();
+
+        // Then, make the screen object activate
+        GameplayStateObject.SetActive(true);
+
+        // TODO : Whatever needs to happen when activating the screen
+    }
+    public void ActivateGameOverScreen()
+    {
+        // First, make sure all other game states are deactivated
+        DeactivateAllGameStates();
+
+        // Then, make the screen object activate
+        GameOverScreenStateObject.SetActive(true);
+
+        // TODO : Whatever needs to happen when activating the screen
+    }
+
+    #endregion
 }
