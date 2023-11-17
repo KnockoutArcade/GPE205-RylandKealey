@@ -19,7 +19,7 @@ public class MapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerateMap();
+        //GenerateMap();
     }
 
     // Update is called once per frame
@@ -37,6 +37,9 @@ public class MapGenerator : MonoBehaviour
     // Generate the map
     public void GenerateMap()
     {
+        // Reset the map
+        DestroyExistingMap();
+        
         // Set the random seed for the map
         if (isMapOfTheDay)
         {
@@ -120,5 +123,15 @@ public class MapGenerator : MonoBehaviour
     {
         // Add up our date and return it
         return dateToUse.Year + dateToUse.Month + dateToUse.Day + dateToUse.Hour + dateToUse.Minute + dateToUse.Second + dateToUse.Millisecond;
+    }
+
+    // Destroy the existing map
+    public void DestroyExistingMap()
+    {
+        // Since all of the map geometry is a child of the map generator, simply destroying all of the children will wipe the map clean
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
     }
 }

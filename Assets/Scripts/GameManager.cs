@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     /// <summary>
-    /// List of Players
+    /// List of Player controllers (not the actual pawns)
     /// </summary>
     public List<PlayerController> players;
 
@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
     /// List of all enemies in the scene
     /// </summary>
     public List<AIController> enemies;
+
+    /// <summary>
+    /// The map generator object. The game manager will use its functions to create the map
+    /// </summary>
+    public MapGenerator MapGen;
     
     // Prefabs
     public GameObject playerControllerPrefab;
@@ -73,10 +78,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         ActivateTitleScreen();
-        
-        ///SpawnPlayer();
-
-        ///SpawnEnemies(3);
     }
 
     public void SpawnPlayer()
@@ -210,7 +211,39 @@ public class GameManager : MonoBehaviour
         // Then, make the screen object activate
         GameplayStateObject.SetActive(true);
 
-        // TODO : Whatever needs to happen when activating the screen
+
+        // Generate a new map
+        MapGen.GenerateMap();
+
+        // Destroy any remaining players, controllers, and enemies
+        foreach(PlayerController playercontroller in players)
+        {
+            Destroy(playercontroller);
+        }
+        foreach(AIController aicontroller in enemies)
+        {
+            Destroy(aicontroller);
+        }
+
+        // Find every pawn in the world
+        //TankPawn[] tanks = FindObjectsByType<TankPawn>(FindObjectsSortMode.None);
+        //Debug.Log(tanks);
+
+        // Destroy all of them
+        foreach(Pawn a in FindObjectsByType<Pawn>(FindObjectsSortMode.None))
+        {
+            Destroy(a.gameObject);
+        }
+
+        // Allocate Memory for player list
+        players = new List<PlayerController>();
+        // Allocate Memory for enemy list
+        enemies = new List<AIController>();
+
+
+        SpawnPlayer();
+
+        SpawnEnemies(3);
     }
     public void ActivateGameOverScreen()
     {

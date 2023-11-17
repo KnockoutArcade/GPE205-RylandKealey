@@ -416,6 +416,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &213517837
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 213517839}
+  - component: {fileID: 213517838}
+  m_Layer: 0
+  m_Name: MapGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &213517838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213517837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13ce658b8197dab4a9ee2f03f2484654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridPrefabs:
+  - {fileID: 1819875885598701609, guid: 3ff3ced8cc0cc05459043e198e83557e, type: 3}
+  - {fileID: 4817526556790628642, guid: 7af294f16a315f046a86dcccbe0a6d44, type: 3}
+  - {fileID: 121816, guid: 41d4243be8ad3a5409422171976de7ff, type: 3}
+  rows: 2
+  cols: 2
+  roomWidth: 50
+  roomHeight: 50
+  mapSeed: 0
+  isMapOfTheDay: 0
+--- !u!4 &213517839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213517837}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &321349241
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,11 +628,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players: []
   enemies: []
-  playerControllerPrefab: {fileID: 0}
-  enemyControllerPrefab: []
+  MapGen: {fileID: 213517838}
+  playerControllerPrefab: {fileID: 5618601506961674256, guid: 23b9eee4594e1654a839caf84bcba108, type: 3}
+  enemyControllerPrefab:
+  - {fileID: 5618601506961674256, guid: 0b7b62ae5caa53947b876a1716801e3b, type: 3}
+  - {fileID: 5618601506961674256, guid: 9010b4e4550077e429623ac51f9d8c80, type: 3}
   enemyControllerPrefabIndex: 0
-  tankPawnPrefab: {fileID: 0}
-  enemyPawnPrefab: []
+  tankPawnPrefab: {fileID: 643167606172717222, guid: 03f4565193922f444a6d955c0af7f379, type: 3}
+  enemyPawnPrefab:
+  - {fileID: 643167606172717222, guid: 78e2cc5415add69438176227144b9970, type: 3}
   enemyPawnPrefabIndex: 0
   playerSpawnTransforms: []
   randomPlayerSpawn: 0
@@ -599,7 +657,7 @@ Transform:
   m_GameObject: {fileID: 894473549}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.967281, y: -8.889526, z: 4.2679343}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -843,7 +901,7 @@ Transform:
   m_GameObject: {fileID: 1177956812}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.890961, y: 0.81647825, z: 9.248182}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1198,3 +1256,4 @@ SceneRoots:
   - {fileID: 1428823213}
   - {fileID: 1226166027}
   - {fileID: 1177956814}
+  - {fileID: 213517839}
