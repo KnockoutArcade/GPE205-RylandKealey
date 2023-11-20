@@ -23,7 +23,6 @@ public class Health : MonoBehaviour
         _currentHealth = _currentHealth - amount;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, maxHealth);
         Debug.Log(source.name + " did " + amount + " damage to " + gameObject.name);
-        Debug.LogFormat("{0} did {1} damage to {2}", source.name, amount, gameObject.name);
 
         if (_currentHealth <= 0)
         {
@@ -40,6 +39,15 @@ public class Health : MonoBehaviour
     public void Die(Pawn source)
     {
         Debug.Log(source.name + "killed " + gameObject.name);
+
+        // Get the player controller of the object that killed this
+        PlayerController controller = source.playerController;
+        // If the controller is found, add 500 points to the score
+        if (controller != null)
+        {
+            controller.AddToScore(500);
+        }
+
         Destroy(gameObject);
     }
 }
