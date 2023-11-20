@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     private float _currentHealth;
     public float maxHealth;
+    public Image healthBar;
     
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,12 @@ public class Health : MonoBehaviour
         _currentHealth = Mathf.Clamp(_currentHealth, 0, maxHealth);
         Debug.Log(source.name + " did " + amount + " damage to " + gameObject.name);
 
+        // Change our health bar
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = _currentHealth / maxHealth;
+        }
+
         if (_currentHealth <= 0)
         {
             Die(source);
@@ -34,6 +42,12 @@ public class Health : MonoBehaviour
     {
         _currentHealth = _currentHealth + amount;
         _currentHealth = Mathf.Clamp(_currentHealth, 0, maxHealth);
+
+        // Change our health bar
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = _currentHealth / maxHealth;
+        }
     }
 
     public void Die(Pawn source)
