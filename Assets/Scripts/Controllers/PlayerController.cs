@@ -15,6 +15,12 @@ public class PlayerController : Controller
 
     // Score
     public int score;
+
+    // Lives
+    public int lives = 3;
+
+    // Whether or not the pawn this controls is currently alive
+    public bool pawnIsAlive = true;
     
     // Start is called before the first frame update
     public override void Start()
@@ -43,6 +49,11 @@ public class PlayerController : Controller
 
         ProcessInputs();
 
+        // Check to see if the pawn we're controlling is still alive
+        if (pawn == null)
+        {
+            pawnIsAlive = false;
+        }
     }
 
     public void ProcessInputs()

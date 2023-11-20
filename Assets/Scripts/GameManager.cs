@@ -69,10 +69,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        ///if (players.Count == 0)
-        ///{
-        ///    SpawnPlayer();
-        ///}
+        // Check for any player deaths
+        if (players.Count > 0)
+        {
+            foreach (PlayerController pc in players)
+            {
+                if (!pc.pawnIsAlive && pc.lives > 0)
+                {
+                    RespawnPlayer(pc);
+                }
+            }
+        }
+        
     }
 
     private void Start()
@@ -102,6 +110,29 @@ public class GameManager : MonoBehaviour
 
         // Set the player score to 0
         newController.score = 0;
+    }
+
+    public void RespawnPlayer(PlayerController pc)
+    {
+        // Find all the spawnPoints in the level
+        playerSpawnTransforms = FindObjectsByType<PawnSpawnPoint>(FindObjectsSortMode.None);
+        randomPlayerSpawn = UnityEngine.Random.Range(0, playerSpawnTransforms.Length - 1);
+
+        // Spawn the Pawn and connect it to that controller
+        GameObject newPawnObj = Instantiate(tankPawnPrefab, playerSpawnTransforms[randomPlayerSpawn].transform.position, playerSpawnTransforms[randomPlayerSpawn].transform.rotation);
+
+        // Get the Pawn component
+        Pawn newPawn = newPawnObj.GetComponent<Pawn>();
+
+        // Hook them up
+        pc.pawn = newPawn;
+        newPawn.playerController = pc;
+
+        // Reduce Lives by 1
+        pc.lives--;
+
+        // Reset pawn alive check
+        pc.pawnIsAlive = true;
     }
 
     public void SpawnEnemies(int amount)
