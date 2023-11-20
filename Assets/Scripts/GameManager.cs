@@ -93,11 +93,12 @@ public class GameManager : MonoBehaviour
         GameObject newPawnObj = Instantiate(tankPawnPrefab, playerSpawnTransforms[randomPlayerSpawn].transform.position, playerSpawnTransforms[randomPlayerSpawn].transform.rotation);
 
         // Get the PlayerController component and Pawn component
-        Controller newController = newPlayerObj.GetComponent<Controller>();
+        PlayerController newController = newPlayerObj.GetComponent<PlayerController>();
         Pawn newPawn = newPawnObj.GetComponent<Pawn>();
 
         // Hook them up
         newController.pawn = newPawn;
+        newPawn.playerController = newController;
     }
 
     public void SpawnEnemies(int amount)
@@ -212,28 +213,16 @@ public class GameManager : MonoBehaviour
         GameplayStateObject.SetActive(true);
 
 
-
-        // Destroy any remaining players, controllers, and enemies
-        foreach (PlayerController playercontroller in players)
+        // Destroy anything that is set to be Destroyed upon loading a new map
+        DestroyOnNewmap[] objectsToDestroy = FindObjectsByType<DestroyOnNewmap>(FindObjectsSortMode.None);
+        if (objectsToDestroy.Length > 0)
         {
-            Destroy(playercontroller);
-        }
-        foreach (AIController aicontroller in enemies)
-        {
-            Destroy(aicontroller);
-        }
-
-        // Find every pawn in the world and destroy all of them
-        foreach (Pawn a in FindObjectsByType<Pawn>(FindObjectsSortMode.None))
-        {
-            Destroy(a.gameObject);
+            foreach (DestroyOnNewmap a in objectsToDestroy)
+            {
+                Destroy(a.gameObject);
+            }
         }
 
-        // Find every pickup in the world and destroy all of them
-        foreach (Pickup b in FindObjectsByType<Pickup>(FindObjectsSortMode.None))
-        {
-            Destroy(b.gameObject);
-        }
         // Generate a new map
         MapGen.GenerateMap();
 
@@ -241,7 +230,6 @@ public class GameManager : MonoBehaviour
         players = new List<PlayerController>();
         // Allocate Memory for enemy list
         enemies = new List<AIController>();
-
 
         SpawnPlayer();
 

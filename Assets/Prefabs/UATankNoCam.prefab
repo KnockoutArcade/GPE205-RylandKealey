@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3217398107563361103}
   - component: {fileID: 5255555016202445596}
   - component: {fileID: 4575737498623762308}
+  - component: {fileID: -8611004138043272645}
   m_Layer: 0
   m_Name: UATankNoCam
   m_TagString: Untagged
@@ -153,7 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 50
   turnSpeed: 100
+  isMakingNoise: 0
+  playerController: {fileID: 0}
   shellPrefab: {fileID: 7004410049245381044, guid: f4170bb27fe5b2441ae27be3c71755cf, type: 3}
+  minePrefab: {fileID: 0}
   fireForce: 1000
   damageDone: 5
   shellLifespan: 2
@@ -184,6 +188,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
+--- !u!114 &-8611004138043272645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643167606172717222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d4cc8ae487f79e42aad2e31c10d8484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2974945605172586223
 GameObject:
   m_ObjectHideFlags: 0

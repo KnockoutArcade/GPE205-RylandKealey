@@ -13,6 +13,7 @@ public abstract class Pawn : MonoBehaviour
     /// </summary>
     public float turnSpeed;
     public bool isMakingNoise;
+    public PlayerController playerController;
     
     // Start is called before the first frame update
     public virtual void Start()

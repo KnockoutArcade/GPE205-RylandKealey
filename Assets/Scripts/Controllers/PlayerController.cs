@@ -5,12 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerController : Controller
 {
+    // Controls
     public KeyCode moveForwardKey;
     public KeyCode moveBackwardKey;
     public KeyCode rotateClockwiseKey;
     public KeyCode rotateCounterClockwiseKey;
     public KeyCode shootKey;
     public KeyCode layMineKey;
+
+    // Score
+    public int score;
     
     // Start is called before the first frame update
     public override void Start()
@@ -39,23 +43,23 @@ public class PlayerController : Controller
 
         ProcessInputs();
 
-        if (pawn == null)
-        {
-            // If manager exists
-            {
-                if (GameManager.instance != null)
-                {
-                    // And if it can track players
-                    if (GameManager.instance.players != null)
-                    {
-                        // Remove it from the GameManager
-                        GameManager.instance.players.Remove(this);
-                    }
-                }
-            }
+        //if (pawn == null)
+        //{
+        //    // If manager exists
+        //    {
+        //        if (GameManager.instance != null)
+        //        {
+        //            // And if it can track players
+        //            if (GameManager.instance.players != null)
+        //            {
+        //                // Remove it from the GameManager
+        //                GameManager.instance.players.Remove(this);
+        //            }
+        //        }
+        //    }
 
-            Destroy(this.gameObject);
-        }
+        //    Destroy(this.gameObject);
+        //}
     }
 
     public void ProcessInputs()

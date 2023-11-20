@@ -283,15 +283,15 @@ public class AIController : Controller
         // If the gameManager exists
         if (GameManager.instance != null)
         {
-            Debug.Log("Found Game manager");
+            //Debug.Log("Found Game manager");
             // and the array of players exists
             if (GameManager.instance.players != null)
             {
-                Debug.Log("Found Player list");
+                //Debug.Log("Found Player list");
                 // ... and there are players in it
                 if (GameManager.instance.players.Count > 0)
                 {
-                    Debug.Log("Players in list");
+                    //Debug.Log("Players in list");
                     // Then target the gameObject of the pawn of the first player controller in the list
                     target = GameManager.instance.players[0].pawn.gameObject;
                 }
@@ -345,7 +345,7 @@ public class AIController : Controller
                 closestTankDistance = Vector3.Distance(pawn.transform.position, closestTank.transform.position);
             }
         }
-        Debug.Log(closestTank);
+        //Debug.Log(closestTank);
         // Target the closest tank
         target = closestTank.gameObject;
     }
@@ -372,7 +372,7 @@ public class AIController : Controller
 
         // If they are making noise, add the volumeDistance in the noisemaker to the hearingdistance of this ai
         float totalDistance = noiseMaker.volumeDistance + hearingDistance;
-        Debug.Log(totalDistance);
+        //Debug.Log(totalDistance);
 
         // If the distance between our pawn and the target is closer than this...
         if (Vector3.Distance(pawn.transform.position, target.transform.position) <= totalDistance)
