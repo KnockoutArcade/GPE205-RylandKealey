@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MineRestorePickup : MonoBehaviour
+public class MineRestorePickup : Pickup
 {
     public MineRestorePowerup powerup;
 

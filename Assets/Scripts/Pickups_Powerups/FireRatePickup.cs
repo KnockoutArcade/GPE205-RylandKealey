@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireRatePickup : MonoBehaviour
+public class FireRatePickup : Pickup
 {
     public FireratePowerup powerup;
 

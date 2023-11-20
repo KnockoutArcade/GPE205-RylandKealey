@@ -212,28 +212,30 @@ public class GameManager : MonoBehaviour
         GameplayStateObject.SetActive(true);
 
 
-        // Generate a new map
-        MapGen.GenerateMap();
 
         // Destroy any remaining players, controllers, and enemies
-        foreach(PlayerController playercontroller in players)
+        foreach (PlayerController playercontroller in players)
         {
             Destroy(playercontroller);
         }
-        foreach(AIController aicontroller in enemies)
+        foreach (AIController aicontroller in enemies)
         {
             Destroy(aicontroller);
         }
 
-        // Find every pawn in the world
-        //TankPawn[] tanks = FindObjectsByType<TankPawn>(FindObjectsSortMode.None);
-        //Debug.Log(tanks);
-
-        // Destroy all of them
-        foreach(Pawn a in FindObjectsByType<Pawn>(FindObjectsSortMode.None))
+        // Find every pawn in the world and destroy all of them
+        foreach (Pawn a in FindObjectsByType<Pawn>(FindObjectsSortMode.None))
         {
             Destroy(a.gameObject);
         }
+
+        // Find every pickup in the world and destroy all of them
+        foreach (Pickup b in FindObjectsByType<Pickup>(FindObjectsSortMode.None))
+        {
+            Destroy(b.gameObject);
+        }
+        // Generate a new map
+        MapGen.GenerateMap();
 
         // Allocate Memory for player list
         players = new List<PlayerController>();
