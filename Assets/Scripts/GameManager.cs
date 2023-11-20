@@ -99,6 +99,9 @@ public class GameManager : MonoBehaviour
         // Hook them up
         newController.pawn = newPawn;
         newPawn.playerController = newController;
+
+        // Set the player score to 0
+        newController.score = 0;
     }
 
     public void SpawnEnemies(int amount)

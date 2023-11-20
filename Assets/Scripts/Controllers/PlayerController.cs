@@ -43,23 +43,6 @@ public class PlayerController : Controller
 
         ProcessInputs();
 
-        //if (pawn == null)
-        //{
-        //    // If manager exists
-        //    {
-        //        if (GameManager.instance != null)
-        //        {
-        //            // And if it can track players
-        //            if (GameManager.instance.players != null)
-        //            {
-        //                // Remove it from the GameManager
-        //                GameManager.instance.players.Remove(this);
-        //            }
-        //        }
-        //    }
-
-        //    Destroy(this.gameObject);
-        //}
     }
 
     public void ProcessInputs()
@@ -100,5 +83,10 @@ public class PlayerController : Controller
         {
             pawn.isMakingNoise = false;
         }
+    }
+
+    public void AddToScore(int amount)
+    {
+        score += amount;
     }
 }
