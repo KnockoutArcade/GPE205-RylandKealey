@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
     /// The map generator object. The game manager will use its functions to create the map
     /// </summary>
     public MapGenerator MapGen;
+
+    /// <summary>
+    /// The main camera in the scene
+    /// </summary>
+    public CameraFollow Cam;
     
     // Prefabs
     public GameObject playerControllerPrefab;
@@ -110,6 +115,11 @@ public class GameManager : MonoBehaviour
 
         // Set the player score to 0
         newController.score = 0;
+
+        // Find the camera point component to know where the camera should be placed
+        CameraFollowPoint campoint = newPawnObj.GetComponent<CameraFollowPoint>();
+        // Set the Camera to follow this new pawn
+        Cam.target = campoint.CameraTransform;
     }
 
     public void RespawnPlayer(PlayerController pc)
@@ -133,6 +143,11 @@ public class GameManager : MonoBehaviour
 
         // Reset pawn alive check
         pc.pawnIsAlive = true;
+
+        // Find the camera point component to know where the camera should be placed
+        CameraFollowPoint campoint = newPawnObj.GetComponent<CameraFollowPoint>();
+        // Set the Camera to follow this new pawn
+        Cam.target = campoint.CameraTransform;
     }
 
     public void SpawnEnemies(int amount)
