@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
         CameraFollowPoint campoint = newPawnObj.GetComponent<CameraFollowPoint>();
         // Set the Camera to follow this new pawn
         Cam.target = campoint.CameraTransform;
+
     }
 
     public void RespawnPlayer(PlayerController pc)
@@ -295,6 +296,9 @@ public class GameManager : MonoBehaviour
         SpawnPlayer();
 
         SpawnEnemies(3);
+
+        // Update Score
+        UpdateScore();
     }
     public void ActivateGameOverScreen()
     {
