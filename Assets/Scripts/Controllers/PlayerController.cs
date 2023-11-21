@@ -99,5 +99,14 @@ public class PlayerController : Controller
     public void AddToScore(int amount)
     {
         score += amount;
+
+        // If manager exists
+        {
+            if (GameManager.instance != null)
+            {
+                // Update the score in the UI
+                GameManager.instance.UpdateScore();
+            }
+        }
     }
 }

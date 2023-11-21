@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,6 +32,11 @@ public class GameManager : MonoBehaviour
     /// The main camera in the scene
     /// </summary>
     public CameraFollow Cam;
+
+    /// <summary>
+    /// The score and Lives UI object
+    /// </summary>
+    public TextMeshProUGUI scoreDisplay;
     
     // Prefabs
     public GameObject playerControllerPrefab;
@@ -198,6 +205,11 @@ public class GameManager : MonoBehaviour
 
             i++;
         }
+    }
+
+    public void UpdateScore()
+    {
+        scoreDisplay.text = "Score: " + players[0].score;
     }
 
     #region Gameplay State Scripts
