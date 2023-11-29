@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
     /// The score and Lives UI object
     /// </summary>
     public TextMeshProUGUI scoreDisplay;
+
+    // Menu and gameplay music
+    public AudioSource MenuMusicAudioSource;
+    public AudioSource GameplayMusicAudioSource;
     
     // Prefabs
     public GameObject playerControllerPrefab;
@@ -272,6 +276,9 @@ public class GameManager : MonoBehaviour
         p1CameraProperties.rect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
         // Deactivate the 2nd cam
         P2Cam.gameObject.SetActive(false);
+
+        // Stop the gameplay music
+        GameplayMusicAudioSource.Stop();
     }
 
     public void ActivateTitleScreen()
@@ -322,6 +329,12 @@ public class GameManager : MonoBehaviour
         // Then, make the screen object activate
         GameplayStateObject.SetActive(true);
 
+        // Stop the menu music
+        MenuMusicAudioSource.Stop();
+
+        // Play the Gameplay Music
+        GameplayMusicAudioSource.Play();
+
         // Destroy anyting in the game world that still exists
         DestroyExistingMap();
 
@@ -365,6 +378,9 @@ public class GameManager : MonoBehaviour
         players = new List<PlayerController>();
         // Reset Enemies List
         enemies = new List<AIController>();
+
+        // Start playing menu music
+        MenuMusicAudioSource.Play();
     }
 
     #endregion
