@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankShooter : Shooter
 {
     public Transform firepointTransform;
+    public AudioSource shotSoundSource;
     public float shotsPerSecond;
     private float secondsPerShot;
     private float shotTimer;
@@ -66,6 +67,12 @@ public class TankShooter : Shooter
                 rb.AddForce(firepointTransform.forward * fireForce);
             }
             #endregion
+
+            // Reset any sound that might be happening
+            shotSoundSource.Stop();
+
+            // Play sound effect
+            shotSoundSource.Play();
 
             // Destroy it after a set time
             Destroy(newShell, lifespan);
