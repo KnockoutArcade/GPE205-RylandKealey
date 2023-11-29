@@ -90,9 +90,13 @@ public class GameManager : MonoBehaviour
                 {
                     RespawnPlayer(pc);
                 }
+
+                if (!pc.pawnIsAlive && pc.lives <= 0)
+                {
+                    ActivateGameOverScreen();
+                }
             }
         }
-        
     }
 
     private void Start()
@@ -224,6 +228,9 @@ public class GameManager : MonoBehaviour
         CreditsScreenStateObject.SetActive(false);
         GameplayStateObject.SetActive(false);
         GameOverScreenStateObject.SetActive(false);
+
+        // Destroy the game world
+        DestroyExistingMap();
     }
 
     public void ActivateTitleScreen()
@@ -274,16 +281,8 @@ public class GameManager : MonoBehaviour
         // Then, make the screen object activate
         GameplayStateObject.SetActive(true);
 
-
-        // Destroy anything that is set to be Destroyed upon loading a new map
-        DestroyOnNewmap[] objectsToDestroy = FindObjectsByType<DestroyOnNewmap>(FindObjectsSortMode.None);
-        if (objectsToDestroy.Length > 0)
-        {
-            foreach (DestroyOnNewmap a in objectsToDestroy)
-            {
-                Destroy(a.gameObject);
-            }
-        }
+        // Destroy anyting in the game world that still exists
+        DestroyExistingMap();
 
         // Generate a new map
         MapGen.GenerateMap();
@@ -308,8 +307,27 @@ public class GameManager : MonoBehaviour
         // Then, make the screen object activate
         GameOverScreenStateObject.SetActive(true);
 
-        // TODO : Whatever needs to happen when activating the screen
+        // Reset Player List
+        players = new List<PlayerController>();
+        // Reset Enemies List
+        enemies = new List<AIController>();
     }
 
     #endregion
+
+    public void DestroyExistingMap()
+    {
+        // Destroy anything that is set to be Destroyed upon loading a new map
+        DestroyOnNewmap[] objectsToDestroy = FindObjectsByType<DestroyOnNewmap>(FindObjectsSortMode.None);
+        if (objectsToDestroy.Length > 0)
+        {
+            foreach (DestroyOnNewmap a in objectsToDestroy)
+            {
+                Destroy(a.gameObject);
+            }
+        }
+
+        // Destroy all of the physical rooms
+        MapGen.DestroyExistingMap(); 
+    }
 }
