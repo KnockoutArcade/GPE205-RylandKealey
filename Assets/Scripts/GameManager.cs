@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
     public CameraFollow Cam;
 
     /// <summary>
+    /// Player 2's Camera
+    /// </summary>
+    public CameraFollow P2Cam;
+
+    /// <summary>
     /// The score and Lives UI object
     /// </summary>
     public TextMeshProUGUI scoreDisplay;
@@ -51,6 +56,8 @@ public class GameManager : MonoBehaviour
     // List of enemy spawns
     public EnemySpawnPoint[] enemySpawnTransforms;
     public int randomEnemySpawn;
+    // Enable Multiplayer
+    public bool enableMultiplayer = false;
 
     // Game States
     public GameObject TitleScreenStateObject;
@@ -77,6 +84,9 @@ public class GameManager : MonoBehaviour
         players = new List<PlayerController>();
         // Allocate Memory for enemy list
         enemies = new List<AIController>();
+
+        // Deactivate the Player 2 Camera
+        P2Cam.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -104,7 +114,7 @@ public class GameManager : MonoBehaviour
         ActivateTitleScreen();
     }
 
-    public void SpawnPlayer()
+    public void SpawnPlayer(CameraFollow camera)
     {
         // Spawn the Player Controller at (0, 0, 0) with no rotation
         GameObject newPlayerObj = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity);
@@ -130,8 +140,30 @@ public class GameManager : MonoBehaviour
         // Find the camera point component to know where the camera should be placed
         CameraFollowPoint campoint = newPawnObj.GetComponent<CameraFollowPoint>();
         // Set the Camera to follow this new pawn
-        Cam.target = campoint.CameraTransform;
+        camera.target = campoint.CameraTransform;
 
+    }
+
+    public void SpawnMultiplayer()
+    {
+        // Spawn the 1st Player
+        SpawnPlayer(Cam);
+
+        // Get the camera component of the first player
+        Camera p1CameraProperties = Cam.GetComponent<Camera>();
+        // Set the viewport rect properties so it takes up the left half of the screen
+        p1CameraProperties.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
+
+        // Spawn the 2nd Player
+        SpawnPlayer(P2Cam);
+
+        // Get the camera component of the Second player
+        Camera p2CameraProperties = P2Cam.GetComponent<Camera>();
+        // Set the viewport rect properties so it takes up the right half of the screen
+        p2CameraProperties.rect = new Rect(0.5f, 0.0f, 0.5f, 1.0f);
+
+        // Activate the 2nd cam
+        P2Cam.gameObject.SetActive(true);
     }
 
     public void RespawnPlayer(PlayerController pc)
@@ -231,6 +263,15 @@ public class GameManager : MonoBehaviour
 
         // Destroy the game world
         DestroyExistingMap();
+
+        // Reset Cameras
+
+        // Get the camera component of the first player
+        Camera p1CameraProperties = Cam.GetComponent<Camera>();
+        // Set the viewport rect properties so it takes up the entire screen
+        p1CameraProperties.rect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
+        // Deactivate the 2nd cam
+        P2Cam.gameObject.SetActive(false);
     }
 
     public void ActivateTitleScreen()
@@ -292,7 +333,20 @@ public class GameManager : MonoBehaviour
         // Allocate Memory for enemy list
         enemies = new List<AIController>();
 
-        SpawnPlayer();
+        // Spawn in Players
+        if (!enableMultiplayer)
+        {
+            SpawnPlayer(Cam);
+
+            // Get the camera component of the first player
+            Camera p1CameraProperties = Cam.GetComponent<Camera>();
+            // Set the viewport rect properties so it takes up the entire screen
+            p1CameraProperties.rect = new Rect(0.0f, 0.0f, 1.0f, 1.0f);
+        }
+        else
+        {
+            SpawnMultiplayer();
+        }
 
         SpawnEnemies(3);
 

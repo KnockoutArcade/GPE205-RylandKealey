@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firepointTransform: {fileID: 358209586982816007}
   shotSoundSource: {fileID: 2523426251765391669}
+  shotSoundClip: {fileID: 8300000, guid: 49a24067d87c89f4fa3ea2bf965f2735, type: 3}
   shotsPerSecond: 5
 --- !u!114 &4575737498623762308
 MonoBehaviour:
@@ -192,6 +193,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   healthBar: {fileID: 3526773961483245700}
+  deathSoundFX: {fileID: 8300000, guid: 7ad86f5e49e79b6408a49c3dcc8cfa11, type: 3}
+  hurtSoundFX: {fileID: 8300000, guid: 43936469916348047ad34581b3da6f62, type: 3}
 --- !u!114 &-8611004138043272645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +293,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

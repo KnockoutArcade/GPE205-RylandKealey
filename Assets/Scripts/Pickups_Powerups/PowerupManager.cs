@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerupManager : MonoBehaviour
 {
     public List<Powerup> powerups;
+    public AudioClip powerupAudio;
     private List<Powerup> removedPowerUpQueue;
 
     // Start is called before the first frame update
@@ -32,6 +33,11 @@ public class PowerupManager : MonoBehaviour
 
         // Save it to the list
         powerups.Add(powerupToAdd);
+
+        // Find the audio source
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        // Play the sound effect
+        audioSource.PlayOneShot(powerupAudio);
     }
 
     public void Remove(Powerup powerupToRemove)

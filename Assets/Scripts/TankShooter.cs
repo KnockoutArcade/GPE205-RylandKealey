@@ -6,6 +6,7 @@ public class TankShooter : Shooter
 {
     public Transform firepointTransform;
     public AudioSource shotSoundSource;
+    public AudioClip shotSoundClip;
     public float shotsPerSecond;
     private float secondsPerShot;
     private float shotTimer;
@@ -72,7 +73,7 @@ public class TankShooter : Shooter
             shotSoundSource.Stop();
 
             // Play sound effect
-            shotSoundSource.Play();
+            shotSoundSource.PlayOneShot(shotSoundClip);
 
             // Destroy it after a set time
             Destroy(newShell, lifespan);

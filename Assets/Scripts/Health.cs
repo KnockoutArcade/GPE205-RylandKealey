@@ -8,6 +8,8 @@ public class Health : MonoBehaviour
     private float _currentHealth;
     public float maxHealth;
     public Image healthBar;
+    public AudioClip deathSoundFX;
+    public AudioClip hurtSoundFX;
     
     // Start is called before the first frame update
     void Start()
@@ -36,6 +38,11 @@ public class Health : MonoBehaviour
         {
             Die(source);
         }
+
+        // Find the audio source on this object
+        AudioSource hitaudio = gameObject.GetComponent<AudioSource>();
+        // Play the sound efect
+        hitaudio.PlayOneShot(hurtSoundFX);
     }
 
     public void Heal(float amount, Pawn source)
@@ -62,6 +69,11 @@ public class Health : MonoBehaviour
             controller.AddToScore(500);
         }
 
+        //Play the destroy sound
+        AudioSource.PlayClipAtPoint(deathSoundFX, new Vector3(0.0f, 0.0f, 0.0f));
+
         Destroy(gameObject);
+
+        
     }
 }
