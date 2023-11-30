@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
     /// The score and Lives UI object
     /// </summary>
     public TextMeshProUGUI scoreDisplay;
+    /// <summary>
+    /// The score and lives of the 2nd player
+    /// </summary>
+    public TextMeshProUGUI P2scoreDisplay;
 
     // Menu and gameplay music
     public AudioSource MenuMusicAudioSource;
@@ -49,6 +53,7 @@ public class GameManager : MonoBehaviour
     
     // Prefabs
     public GameObject playerControllerPrefab;
+    public GameObject player2ControllerPrefab;
     public GameObject[] enemyControllerPrefab;
     public int enemyControllerPrefabIndex;
     public GameObject tankPawnPrefab;
@@ -100,14 +105,32 @@ public class GameManager : MonoBehaviour
         {
             foreach (PlayerController pc in players)
             {
-                if (!pc.pawnIsAlive && pc.lives > 0)
-                {
-                    RespawnPlayer(pc);
-                }
-
+                // If a player looses all of their lives...
                 if (!pc.pawnIsAlive && pc.lives <= 0)
                 {
                     ActivateGameOverScreen();
+                }
+
+                // If a player looses a life...
+                if (!pc.pawnIsAlive && pc.lives > 0)
+                {
+                    // If we are playing with multiple players
+                    if (players.Count > 1)
+                    {
+                        // If we are player 2, respawn player 2 with the second camera
+                        if (players[1] == pc)
+                        {
+                            RespawnPlayer(pc, P2Cam);
+                        }
+                        else
+                        {
+                            RespawnPlayer(pc, Cam);
+                        }
+                    }
+                    else
+                    {
+                        RespawnPlayer(pc, Cam);
+                    }
                 }
             }
         }
@@ -118,10 +141,10 @@ public class GameManager : MonoBehaviour
         ActivateTitleScreen();
     }
 
-    public void SpawnPlayer(CameraFollow camera)
+    public void SpawnPlayer(CameraFollow camera, GameObject controllerType)
     {
         // Spawn the Player Controller at (0, 0, 0) with no rotation
-        GameObject newPlayerObj = Instantiate(playerControllerPrefab, Vector3.zero, Quaternion.identity);
+        GameObject newPlayerObj = Instantiate(controllerType, Vector3.zero, Quaternion.identity);
 
         // Find all the spawnPoints in the level
         playerSpawnTransforms = FindObjectsByType<PawnSpawnPoint>(FindObjectsSortMode.None);
@@ -151,7 +174,7 @@ public class GameManager : MonoBehaviour
     public void SpawnMultiplayer()
     {
         // Spawn the 1st Player
-        SpawnPlayer(Cam);
+        SpawnPlayer(Cam, playerControllerPrefab);
 
         // Get the camera component of the first player
         Camera p1CameraProperties = Cam.GetComponent<Camera>();
@@ -159,7 +182,7 @@ public class GameManager : MonoBehaviour
         p1CameraProperties.rect = new Rect(0.0f, 0.0f, 0.5f, 1.0f);
 
         // Spawn the 2nd Player
-        SpawnPlayer(P2Cam);
+        SpawnPlayer(P2Cam, player2ControllerPrefab);
 
         // Get the camera component of the Second player
         Camera p2CameraProperties = P2Cam.GetComponent<Camera>();
@@ -170,7 +193,7 @@ public class GameManager : MonoBehaviour
         P2Cam.gameObject.SetActive(true);
     }
 
-    public void RespawnPlayer(PlayerController pc)
+    public void RespawnPlayer(PlayerController pc, CameraFollow camera)
     {
         // Find all the spawnPoints in the level
         playerSpawnTransforms = FindObjectsByType<PawnSpawnPoint>(FindObjectsSortMode.None);
@@ -195,7 +218,10 @@ public class GameManager : MonoBehaviour
         // Find the camera point component to know where the camera should be placed
         CameraFollowPoint campoint = newPawnObj.GetComponent<CameraFollowPoint>();
         // Set the Camera to follow this new pawn
-        Cam.target = campoint.CameraTransform;
+        camera.target = campoint.CameraTransform;
+
+        // Update Score
+        UpdateScore();
     }
 
     public void SpawnEnemies(int amount)
@@ -250,7 +276,15 @@ public class GameManager : MonoBehaviour
 
     public void UpdateScore()
     {
-        scoreDisplay.text = "Score: " + players[0].score;
+        // Update player 1's ui
+        scoreDisplay.text = "Score: " + players[0].score + "Lives: " + players[0].lives;
+
+        // If we are playing with 2 players, update the second player's UI
+        if (players.Count > 1)
+        {
+            P2scoreDisplay.text = "Score: " + players[1].score + "Lives: " + players[1].lives;
+        }
+        
     }
 
     #region Gameplay State Scripts
@@ -349,7 +383,7 @@ public class GameManager : MonoBehaviour
         // Spawn in Players
         if (!enableMultiplayer)
         {
-            SpawnPlayer(Cam);
+            SpawnPlayer(Cam, playerControllerPrefab);
 
             // Get the camera component of the first player
             Camera p1CameraProperties = Cam.GetComponent<Camera>();
