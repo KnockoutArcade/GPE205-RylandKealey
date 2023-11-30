@@ -86,7 +86,7 @@ public class TankPawn : Pawn
     }
     public override void LayMine()
     {
-        mineDeployer.LayMine(minePrefab, transform.position);
+        mineDeployer.LayMine(minePrefab, transform.position, this);
 
         // Make some noise
         MakeNoise(10);
