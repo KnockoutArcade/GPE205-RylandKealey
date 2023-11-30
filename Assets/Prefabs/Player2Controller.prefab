@@ -53,7 +53,7 @@ MonoBehaviour:
   shootKey: 256
   layMineKey: 257
   score: 0
-  lives: 3
+  lives: 2
   pawnIsAlive: 1
 --- !u!114 &-1645545720632736485
 MonoBehaviour:

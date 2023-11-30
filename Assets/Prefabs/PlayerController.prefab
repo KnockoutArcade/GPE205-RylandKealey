@@ -53,6 +53,8 @@ MonoBehaviour:
   shootKey: 32
   layMineKey: 101
   score: 0
+  lives: 2
+  pawnIsAlive: 1
 --- !u!114 &-1645545720632736485
 MonoBehaviour:
   m_ObjectHideFlags: 0

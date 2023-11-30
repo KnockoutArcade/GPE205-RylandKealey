@@ -416,6 +416,9 @@ public class GameManager : MonoBehaviour
         // Then, make the screen object activate
         GameOverScreenStateObject.SetActive(true);
 
+        // Update the final score
+        finalScore.text = "" + players[0].score;
+
         // Reset Player List
         players = new List<PlayerController>();
         // Reset Enemies List
@@ -424,8 +427,6 @@ public class GameManager : MonoBehaviour
         // Start playing menu music
         MenuMusicAudioSource.Play();
 
-        // Update the final score
-        finalScore.text = "" + players[0].score;
     }
 
     #endregion
