@@ -12,4 +12,9 @@ public class OptionsScreenCheckboxes : MonoBehaviour
     {
         GameManager.instance.enableMultiplayer = multiplayerCheckbox.isOn;
     }
+
+    public void SetMapOfDayStatus()
+    {
+        GameManager.instance.MapGen.isMapOfTheDay = mapOfTheDayCheckbox.isOn;
+    }    
 }

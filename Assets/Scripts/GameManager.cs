@@ -46,6 +46,10 @@ public class GameManager : MonoBehaviour
     /// The score and lives of the 2nd player
     /// </summary>
     public TextMeshProUGUI P2scoreDisplay;
+    /// <summary>
+    /// The final score that is displayed at the end of the game
+    /// </summary>
+    public TextMeshProUGUI finalScore;
 
     // Menu and gameplay music
     public AudioSource MenuMusicAudioSource;
@@ -313,6 +317,10 @@ public class GameManager : MonoBehaviour
 
         // Stop the gameplay music
         GameplayMusicAudioSource.Stop();
+
+        // Reset the score UI
+        scoreDisplay.text = "Score: 0 Lives: 3";
+        P2scoreDisplay.text = "Score: 0 Lives: 3";
     }
 
     public void ActivateTitleScreen()
@@ -415,6 +423,9 @@ public class GameManager : MonoBehaviour
 
         // Start playing menu music
         MenuMusicAudioSource.Play();
+
+        // Update the final score
+        finalScore.text = "" + players[0].score;
     }
 
     #endregion

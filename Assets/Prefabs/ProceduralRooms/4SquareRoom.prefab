@@ -2474,8 +2474,8 @@ MonoBehaviour:
   - {fileID: 1414091939073988902}
   waypointStopDistance: 3
   hearingDistance: 10
-  maxVisionDistance: 0
-  fieldOfView: 0
+  maxVisionDistance: 10
+  fieldOfView: 45
 --- !u!4 &9022222737633170849 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 263228766506371612, guid: 78e2cc5415add69438176227144b9970, type: 3}
