@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class AiBehavior_Rambo : AIController
 {
+    
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
-    }
+
+        maxVisionDistance = 10.0f;
+        fieldOfView = 45.0f;
+}
 
     // Update is called once per frame
     void Update()

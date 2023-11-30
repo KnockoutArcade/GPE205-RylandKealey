@@ -175,7 +175,11 @@ public class AIController : Controller
         // Chase
         Seek(target);
         // Shoot
-        Shoot();
+        if (CanSee(target))
+        {
+            Shoot();
+        }
+        
     }
 
     public virtual void DoFleeState()
